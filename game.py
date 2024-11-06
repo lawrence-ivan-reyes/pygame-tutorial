@@ -1,18 +1,23 @@
-import pygame 
+import pygame
 pygame.init()
 
 screen = pygame.display.set_mode((500, 500))
 
-running = True 
-while running: 
+surf = pygame.Surface((50, 50))  
+surf.fill((255, 111, 33))  
+
+running = True
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     screen.fill((255, 255, 255))
-
-    color = (255, 0, 255)
-    position = (250, 250)  
-    pygame.draw.circle(screen, color, position, 75)
-
+    
     pygame.display.flip()
+
+    screen.fill((255, 255, 255))  
+    screen.blit(surf, (100, 120))  
+    pygame.display.flip()        
+
+pygame.quit()
