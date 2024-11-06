@@ -1,6 +1,19 @@
 import pygame
 pygame.init()
 
+class GameObject(pygame.sprite.Sprite):
+    def __init__(self, x, y, width, height):
+        super(GameObject, self).__init__()
+        self.surf = pygame.Surface((width, height))
+        self.surf.fill((255, 0, 255))  
+        self.x = x
+        self.y = y
+
+    def render(self, screen):
+        screen.blit(self.surf, (self.x, self.y))
+
+box = GameObject(120, 300, 50, 50)  
+
 screen = pygame.display.set_mode((500, 500))
 
 surf = pygame.Surface((50, 50))  
@@ -16,8 +29,8 @@ while running:
     
     pygame.display.flip()
 
-    screen.fill((255, 255, 255))  
-    screen.blit(surf, (100, 120))  
-    pygame.display.flip()        
+    screen.fill((255, 255, 255)) 
+    box.render(screen)           
+    pygame.display.flip()    
 
 pygame.quit()
