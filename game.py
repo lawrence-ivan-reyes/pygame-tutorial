@@ -1,7 +1,10 @@
 import pygame
+from random import randint
+
 pygame.init()
 
 screen = pygame.display.set_mode((500, 500))
+clock = pygame.time.Clock()
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
@@ -13,22 +16,23 @@ class GameObject(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.surf, (self.x, self.y))
 
-apple = './images/apple.png'
-strawberry = './images/strawberry.png'
+class Apple(GameObject):
+    def __init__(self):
+        x = randint(50, 400)
+        super(Apple, self).__init__(x, 0, './images/apple.png')
+        self.dy = (randint(0, 200) / 100) + 1
 
-objects = [
-    GameObject(50, 50, './images/apple.png'), # row 1
-    GameObject(150, 50, './images/strawberry.png'),
-    GameObject(250, 50, './images/apple.png'),
+    def move(self):
+        # self.x += self.dx
+        self.y += self.dy
+        if self.y > 500: 
+            self.reset()
 
-    GameObject(50, 150, './images/strawberry.png'), #row 2
-    GameObject(150, 150, './images/apple.png'),
-    GameObject(250, 150, './images/strawberry.png'),
+    def reset(self):
+        self.x = randint(50, 400)
+        self.y = -64
 
-    GameObject(50, 250, './images/apple.png'), # row 3
-    GameObject(150, 250, './images/strawberry.png'),
-    GameObject(250, 250, './images/apple.png')
-]
+apple = Apple()
 
 running = True
 while running:
@@ -37,13 +41,11 @@ while running:
             running = False
 
     screen.fill((255, 255, 255))
-    
-    # apple.render(screen)
-    # strawberry.render(screen)
 
-    for obj in objects:
-        obj.render(screen) # added to render every GameObject in the list for challegne 2
+    apple.move()
+    apple.render(screen)
      
-    pygame.display.flip()    
+    pygame.display.flip() 
+    clock.tick(60)
 
 pygame.quit()
