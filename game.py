@@ -1,10 +1,11 @@
 import pygame
-from random import randint
+from random import randint, choice
 
 pygame.init()
 
 screen = pygame.display.set_mode((500, 500))
 clock = pygame.time.Clock()
+lanes = [93, 218, 343]
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
@@ -30,7 +31,7 @@ class Apple(GameObject):
             self.reset()
 
     def reset(self):
-        self.x = randint(50, 400)
+        self.x = choice(lanes)
         self.y = -64
 
 class Player(GameObject):
@@ -38,18 +39,39 @@ class Player(GameObject):
         super(Player, self).__init__(0, 0, './images/player.png')  
         self.dx = 0 
         self.dy = 0
+        self.pos_x = 1 
+        self.pos_y = 1
+        self.reset()
+    
+    def reset(self):
+        self.x = lanes[self.pos_x]
+        self.y = lanes[self.pos_y]
+        self.dx = self.x
+        self.dy = self.y
+    
+    def update_dx_dy(self):
+        self.dx = lanes[self.pos_x]
+        self.dy = lanes[self.pos_y]
 
     def left(self):
-        self.dx -= 100
+        if self.pos_x > 0:
+            self.pos_x -= 1
+            self.update_dx_dy()
 
     def right(self):
-        self.dx += 100
+        if self.pos_x < len(lanes) - 1:
+            self.pos_x += 1
+            self.update_dx_dy()
 
     def up(self):
-        self.dy -= 100
+        if self.pos_y > 0:
+            self.pos_y -= 1
+            self.update_dx_dy()
 
     def down(self):
-        self.dy += 100
+        if self.pos_y < len(lanes) - 1:
+            self.pos_y += 1
+            self.update_dx_dy()
 
     def move(self):
         self.x -= (self.x - self.dx) * 0.25
@@ -57,6 +79,10 @@ class Player(GameObject):
 
 apple = Apple()
 player = Player()
+
+all_sprites = pygame.sprite.Group()
+all_sprites.add(player)
+all_sprites.add(apple)
 
 running = True
 while running:
@@ -77,12 +103,10 @@ while running:
 
     screen.fill((255, 255, 255))
 
-    apple.move()
-    apple.render(screen)
+    for entity in all_sprites:
+        entity.move()
+        entity.render(screen)
 
-    player.move()
-    player.render(screen)
-     
     pygame.display.flip() 
     clock.tick(60)
 
