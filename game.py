@@ -33,18 +33,55 @@ class Apple(GameObject):
         self.x = randint(50, 400)
         self.y = -64
 
+class Player(GameObject):
+    def __init__(self):
+        super(Player, self).__init__(0, 0, './images/player.png')  
+        self.dx = 0 
+        self.dy = 0
+
+    def left(self):
+        self.dx -= 100
+
+    def right(self):
+        self.dx += 100
+
+    def up(self):
+        self.dy -= 100
+
+    def down(self):
+        self.dy += 100
+
+    def move(self):
+        self.x -= (self.x - self.dx) * 0.25
+        self.y -= (self.y - self.dy) * 0.25
+
 apple = Apple()
+player = Player()
 
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            elif event.key == pygame.K_LEFT:
+                player.left()  
+            elif event.key == pygame.K_RIGHT:
+                player.right()  
+            elif event.key == pygame.K_UP:
+                player.up()  
+            elif event.key == pygame.K_DOWN:
+                player.down() 
 
     screen.fill((255, 255, 255))
 
     apple.move()
     apple.render(screen)
+
+    player.move()
+    player.render(screen)
      
     pygame.display.flip() 
     clock.tick(60)
