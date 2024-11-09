@@ -54,6 +54,23 @@ class Strawberry(GameObject):
         self.x = choice(lanes)
         self.y = -64
 
+class Bomb(GameObject):
+    def __init__(self):
+        super(Bomb, self).__init__(0, 0, './images/bomb.png')
+        self.dx = 0
+        self.dy = (randint(0, 200) / 100) + 1
+        self.reset()
+
+    def move(self):
+        self.x += self.dx
+        self.y += self.dy
+        if self.y > 500: 
+            self.reset()
+
+    def reset(self):
+        self.x = choice(lanes)
+        self.y = -64
+
 class Player(GameObject):
     def __init__(self):
         super(Player, self).__init__(0, 0, './images/player.png')  
@@ -96,43 +113,6 @@ class Player(GameObject):
     def move(self):
         self.x -= (self.x - self.dx) * 0.25
         self.y -= (self.y - self.dy) * 0.25
-
-# challenge for pt 5
-class Bomb(GameObject):
-    def __init__(self):
-        super(Bomb, self).__init__(0, 0, './images/bomb.png')  
-        self.reset()  # thuis is b/c i want the bomb to start at a random direction
-
-    def reset(self):
-        direction = choice(["up", "down", "left", "right"]) # to pick a random direction
-
-        if direction == "up":
-            self.dx = 0
-            self.dy = -(randint(0, 200) / 100) - 1 
-            self.x = choice(lanes)
-            self.y = 500  
-        elif direction == "down":
-            self.dx = 0
-            self.dy = (randint(0, 200) / 100) + 1  
-            self.x = choice(lanes)
-            self.y = -64  
-        elif direction == "left":
-            self.dx = -(randint(0, 200) / 100) - 1  
-            self.dy = 0
-            self.x = 500 
-            self.y = choice(lanes)
-        elif direction == "right":
-            self.dx = (randint(0, 200) / 100) + 1  
-            self.dy = 0
-            self.x = -64 
-            self.y = choice(lanes)
-
-    def move(self):
-        self.x += self.dx * 0.5 # added b/c it was moving too quickly when i first tested 
-        self.y += self.dy * 0.5
-        
-        if self.x < -64 or self.x > 500 or self.y < -64 or self.y > 500:
-            self.reset()
 
 apple = Apple()
 strawberry = Strawberry()
