@@ -37,6 +37,22 @@ class Apple(GameObject):
         self.x = choice(lanes)
         self.y = -64
 
+# oops, forgot to add Strawberry class in pt 3!
+class Strawberry(GameObject):
+    def __init__(self):
+        super(Strawberry, self).__init__(0, 0, './images/strawberry.png')
+        self.dx = (randint(0, 200) / 100) + 1  
+        self.reset()
+
+    def move(self):
+        self.x += self.dx
+        if self.x > 500:  # this is so if it goes off the right side of the screen
+            self.reset()
+
+    def reset(self):
+        self.x = -64  # starts off the left edge of the screen
+        self.y = choice(lanes)  # this is to choose a random lane for y
+
 class Player(GameObject):
     def __init__(self):
         super(Player, self).__init__(0, 0, './images/player.png')  
