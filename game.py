@@ -170,7 +170,14 @@ while running:
         entity.move()
         entity.render(screen)
 
-    pygame.display.flip() 
+    fruit = pygame.sprite.spritecollideany(player, fruit_sprites)
+    if fruit:
+        fruit.reset()
+
+    if pygame.sprite.collide_rect(player, bomb):
+        running = False
+
+    pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
