@@ -133,13 +133,19 @@ class Bomb(GameObject):
 
 
 apple = Apple()
+strawberry = Strawberry()
 player = Player()
 bomb = Bomb()
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(apple)
+all_sprites.add(strawberry)
 all_sprites.add(bomb)
+
+fruit_sprites = pygame.sprite.Group()
+fruit_sprites.add(apple)
+fruit_sprites.add(strawberry)  
 
 running = True
 while running:
