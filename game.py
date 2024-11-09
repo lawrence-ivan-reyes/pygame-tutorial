@@ -100,37 +100,38 @@ class Player(GameObject):
 class Bomb(GameObject):
     def __init__(self):
         super(Bomb, self).__init__(0, 0, './images/bomb.png')  
-        self.dx = 0 
-        self.dy = 0 
         self.reset()  # thuis is b/c i want the bomb to start at a random direction
 
     def reset(self):
         direction = choice(["up", "down", "left", "right"]) # to pick a random direction
 
         if direction == "up":
-            self.dy = -5  
-            self.dx = 0  
+            self.dx = 0
+            self.dy = -(randint(0, 200) / 100) - 1 
+            self.x = choice(lanes)
+            self.y = 500  
         elif direction == "down":
-            self.dy = 5 
-            self.dx = 0  
+            self.dx = 0
+            self.dy = (randint(0, 200) / 100) + 1  
+            self.x = choice(lanes)
+            self.y = -64  
         elif direction == "left":
-            self.dx = -5 
-            self.dy = 0  
+            self.dx = -(randint(0, 200) / 100) - 1  
+            self.dy = 0
+            self.x = 500 
+            self.y = choice(lanes)
         elif direction == "right":
-            self.dx = 5  
-            self.dy = 0   
-
-        self.x = choice(lanes) 
-        self.y = -64  # this is so the bomb starts off-screen (above the screen)
+            self.dx = (randint(0, 200) / 100) + 1  
+            self.dy = 0
+            self.x = -64 
+            self.y = choice(lanes)
 
     def move(self):
-        self.x += self.dx  
-        self.y += self.dy 
+        self.x += self.dx * 0.5 # added b/c it was moving too quickly when i first tested 
+        self.y += self.dy * 0.5
         
-        # to reset the bomb if it goes off the screen
-        if self.x < 0 or self.x > 500 or self.y < 0 or self.y > 500:
-            self.reset()  # here, the bomb will start over in a new random direction
-
+        if self.x < -64 or self.x > 500 or self.y < -64 or self.y > 500:
+            self.reset()
 
 apple = Apple()
 strawberry = Strawberry()
