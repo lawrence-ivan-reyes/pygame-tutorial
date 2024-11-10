@@ -10,7 +10,7 @@ class GoldenSnitch(GameObject):
     def move(self):
         self.x += self.dx
         self.y += self.dy
-        if self.x > 500 or self.x < -64 or self.y > 500 or self.y < -64:  # want this to come from either horizontal or vertical
+        if self.x > 500 or self.x < -64 or self.y > 500 or self.y < -64:  # want this to come from either horizontal or vertical axes
             self.reset()
 
     def reset(self):

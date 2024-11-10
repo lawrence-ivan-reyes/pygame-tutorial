@@ -1,7 +1,6 @@
 import pygame
 from random import randint, choice
 
-# importing from my new constants.py
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, lanes
 
 # importing game objects from their respective files
@@ -33,7 +32,7 @@ background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREE
 
 ron = Ron()
 hermione = Hermione()
-player = Player() # reminder that this is harry
+player = Player() # reminder: this is harry
 voldemort = Voldemort()
 float1 = Floating()
 float2 = Floating()
