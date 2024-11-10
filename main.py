@@ -94,6 +94,15 @@ while running:
                 point_sound.play()  
             point.reset()
 
+        # stretch challenge: reduce points when voldemort collides with hermione, ron, or golden snitch
+        collided_points = pygame.sprite.spritecollideany(voldemort, point_sprites)
+        if collided_points:
+            if isinstance(collided_points, GoldenSnitch):
+                score -= 5  # lose 5 points for snitch
+            else:
+                score -= 1  # lose 1 point for ron or hermione
+            collided_points.reset()
+
         if pygame.sprite.collide_rect(player, voldemort):
             game_over_sound.play()  # ill play the game over sound effect here
             game_state = 'game_over'
