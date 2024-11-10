@@ -33,7 +33,7 @@ background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREE
 
 ron = Ron()
 hermione = Hermione()
-player = Player() # this is now harry potter
+player = Player() # reminder that this is harry
 voldemort = Voldemort()
 float1 = Floating()
 float2 = Floating()
