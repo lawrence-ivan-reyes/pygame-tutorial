@@ -4,7 +4,7 @@
 ---
 
 ### Demo
-![harrys-great-escape-tutorial](./images/demo.gif)
+![harrys-great-escape-tutorial](./images/game-demo.gif)
 
 ---
 
