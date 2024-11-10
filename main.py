@@ -1,21 +1,22 @@
 import pygame
 from random import randint, choice
-import random
 
-pygame.init()
+# importing from my new constants.py
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, lanes
 
-# added this to help with setting up my background
-screen_width = 500
-screen_height = 500
+# importing game objects from their respective files
+from gameobject import GameObject
+from ron import Ron
+from hermione import Hermione
+from voldemort import Voldemort
+from player import Player  # reminder: this is harry
+from floating import Floating
 
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
-lanes = [93, 218, 343]
 
-# to load background image
-background_image = pygame.image.load("./images/background.png") 
-background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
-
+background_image = pygame.image.load("./images/background.png")
+background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 ron = Ron()
 hermione = Hermione()
@@ -37,6 +38,8 @@ all_sprites.add(float3)
 fruit_sprites = pygame.sprite.Group()
 fruit_sprites.add(ron)
 fruit_sprites.add(hermione)  
+
+pygame.init()
 
 running = True
 while running:
