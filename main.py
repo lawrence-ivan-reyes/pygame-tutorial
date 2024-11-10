@@ -12,8 +12,13 @@ from voldemort import Voldemort
 from player import Player  # reminder: this is harry
 from floating import Floating
 
+pygame.init()
+
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
+
+game_over_sound = pygame.mixer.Sound('./sounds/game_over.mp3') # stretch challenge
+point_sound = pygame.mixer.Sound('./sounds/point.mp3')  # stretch challenge
 
 background_image = pygame.image.load("./images/background.png")
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -35,11 +40,12 @@ all_sprites.add(float1)
 all_sprites.add(float2)
 all_sprites.add(float3)
 
-fruit_sprites = pygame.sprite.Group()
-fruit_sprites.add(ron)
-fruit_sprites.add(hermione)  
+point_sprites = pygame.sprite.Group()
+point_sprites.add(ron)
+point_sprites.add(hermione)  
 
-pygame.init()
+# for stretch challenge
+game_state = 'playing'
 
 running = True
 while running:
@@ -57,21 +63,34 @@ while running:
                 player.up()  
             elif event.key == pygame.K_DOWN:
                 player.down() 
+    
+    if game_state == 'playing':
+        screen.fill((255, 255, 255))
 
-    screen.fill((255, 255, 255))
+        screen.blit(background_image, (0, 0))
 
-    screen.blit(background_image, (0, 0))
+        for entity in all_sprites:
+            entity.move()
+            entity.render(screen)
 
-    for entity in all_sprites:
-        entity.move()
-        entity.render(screen)
+        point = pygame.sprite.spritecollideany(player, point_sprites)
+        if point:
+            point_sound.play()
+            point.reset()
 
-    fruit = pygame.sprite.spritecollideany(player, fruit_sprites)
-    if fruit:
-        fruit.reset()
+        if pygame.sprite.collide_rect(player, voldemort):
+            game_over_sound.play()  # ill play the game over sound effect here
+            game_state = 'game_over'
 
-    if pygame.sprite.collide_rect(player, voldemort):
-        running = False
+    elif game_state == 'game_over':
+        player.reset()
+        ron.reset()
+        hermione.reset()
+        voldemort.reset()
+        float1.reset()
+        float2.reset()
+        float3.reset()
+        game_state = 'playing'
 
     pygame.display.flip()
     clock.tick(60)
