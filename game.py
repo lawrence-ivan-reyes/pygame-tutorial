@@ -28,9 +28,9 @@ class GameObject(pygame.sprite.Sprite):
         self.rect.y = self.y
         screen.blit(self.surf, (self.x, self.y))
 
-class Apple(GameObject):
+class Ron(GameObject):
     def __init__(self):
-        super(Apple, self).__init__(0, 0, './images/apple.png')
+        super(Ron, self).__init__(0, 0, './images/ron.png')
         self.dx = 0
         self.dy = (randint(0, 200) / 100) + 1
         self.reset()
@@ -45,9 +45,9 @@ class Apple(GameObject):
         self.x = choice(lanes)
         self.y = -64
 
-class Strawberry(GameObject):
+class Hermione(GameObject):
     def __init__(self):
-        super(Strawberry, self).__init__(0, 0, './images/strawberry.png')
+        super(Hermione, self).__init__(0, 0, './images/hermione.png')
         self.dx = (randint(0, 200) / 100) + 1
         self.dy = 0
         self.reset()
@@ -62,9 +62,9 @@ class Strawberry(GameObject):
         self.x = -64
         self.y = choice(lanes)
 
-class Bomb(GameObject):
+class Voldemort(GameObject):
     def __init__(self):
-        super(Bomb, self).__init__(0, 0, './images/bomb.png')
+        super(Voldemort, self).__init__(0, 0, './images/voldemort.png')
         self.reset()
 
     def move(self):
@@ -102,7 +102,7 @@ class Bomb(GameObject):
 
 class Player(GameObject):
     def __init__(self):
-        super(Player, self).__init__(0, 0, './images/player.png')  
+        super(Player, self).__init__(0, 0, './images/harry.png')  
         self.dx = 0 
         self.dy = 0
         self.pos_x = 1 
@@ -143,20 +143,20 @@ class Player(GameObject):
         self.dx = lanes[self.pos_x]
         self.dy = lanes[self.pos_y]
 
-apple = Apple()
-strawberry = Strawberry()
-player = Player()
-bomb = Bomb()
+ron = Ron()
+hermione = Hermione()
+player = Player() # this is now harry potter
+voldemort = Voldemort()
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
-all_sprites.add(apple)
-all_sprites.add(strawberry)
-all_sprites.add(bomb)
+all_sprites.add(ron)
+all_sprites.add(hermione)
+all_sprites.add(voldemort)
 
 fruit_sprites = pygame.sprite.Group()
-fruit_sprites.add(apple)
-fruit_sprites.add(strawberry)  
+fruit_sprites.add(ron)
+fruit_sprites.add(hermione)  
 
 running = True
 while running:
@@ -187,7 +187,7 @@ while running:
     if fruit:
         fruit.reset()
 
-    if pygame.sprite.collide_rect(player, bomb):
+    if pygame.sprite.collide_rect(player, voldemort):
         running = False
 
     pygame.display.flip()
