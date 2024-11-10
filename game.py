@@ -40,8 +40,8 @@ class Apple(GameObject):
 class Strawberry(GameObject):
     def __init__(self):
         super(Strawberry, self).__init__(0, 0, './images/strawberry.png')
-        self.dx = 0
-        self.dy = (randint(0, 200) / 100) + 1
+        self.dx = (randint(0, 200) / 100) + 1
+        self.dy = 0
         self.reset()
 
     def move(self):
@@ -57,8 +57,8 @@ class Strawberry(GameObject):
 class Bomb(GameObject):
     def __init__(self):
         super(Bomb, self).__init__(0, 0, './images/bomb.png')
-        self.dx = 0
         self.dy = (randint(0, 200) / 100) + 1
+        self.dx = 0
         self.reset()
 
     def move(self):
@@ -68,8 +68,22 @@ class Bomb(GameObject):
             self.reset()
 
     def reset(self):
-        self.x = choice(lanes)
-        self.y = -64
+        self.x = choice(lanes) 
+        self.y = -64  
+        direction = choice(["up", "down", "left", "right"]) 
+
+        if direction == "up":
+            self.dy = -5
+            self.dx = 0
+        elif direction == "down":
+            self.dy = 5
+            self.dx = 0
+        elif direction == "left":
+            self.dx = -5
+            self.dy = 0
+        elif direction == "right":
+            self.dx = 5
+            self.dy = 0
 
 class Player(GameObject):
     def __init__(self):
