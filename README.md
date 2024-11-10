@@ -3,6 +3,11 @@
 
 ---
 
+### Demo
+![harrys-great-escape-tutorial](./images/demo.gif)
+
+---
+
 ### ℹ️ Program Description
 _Harry's Great Escape_ is interactive Pygame application inspired by the Harry Potter universe.  Navigate Harry through the magical corridors of Hogwarts, collecting points by catching his friends Ron and Hermione while dodging 'He-Who-Must-Not-Be-Named' (a.k.a. Voldemort). Bonus points if you catch the speedy Golden Snitch!
 
