@@ -3,9 +3,17 @@ from random import randint, choice
 
 pygame.init()
 
-screen = pygame.display.set_mode((500, 500))
+# added this to help with setting up my background
+screen_width = 500
+screen_height = 500
+
+screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 lanes = [93, 218, 343]
+
+# to load background image
+background_image = pygame.image.load("./images/background.png") 
+background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, x, y, image):
@@ -168,6 +176,8 @@ while running:
                 player.down() 
 
     screen.fill((255, 255, 255))
+
+    screen.blit(background_image, (0, 0))
 
     for entity in all_sprites:
         entity.move()
