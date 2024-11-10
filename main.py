@@ -11,6 +11,7 @@ from hermione import Hermione
 from voldemort import Voldemort
 from player import Player  # reminder: this is harry
 from floating import Floating
+from golden_snitch import GoldenSnitch
 
 pygame.init()
 
@@ -32,6 +33,7 @@ voldemort = Voldemort()
 float1 = Floating()
 float2 = Floating()
 float3 = Floating()
+snitch = GoldenSnitch()
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
@@ -41,10 +43,12 @@ all_sprites.add(voldemort)
 all_sprites.add(float1)
 all_sprites.add(float2)
 all_sprites.add(float3)
+all_sprites.add(snitch)
 
 point_sprites = pygame.sprite.Group()
 point_sprites.add(ron)
 point_sprites.add(hermione)  
+point_sprites.add(snitch)
 
 # for stretch challenge
 game_state = 'playing'
