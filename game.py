@@ -57,32 +57,39 @@ class Strawberry(GameObject):
 class Bomb(GameObject):
     def __init__(self):
         super(Bomb, self).__init__(0, 0, './images/bomb.png')
-        self.dy = (randint(0, 200) / 100) + 1
-        self.dx = 0
         self.reset()
 
     def move(self):
         self.x += self.dx
         self.y += self.dy
-        if self.y > 500: 
+        if self.x > 500 or self.x < -64 or self.y > 500 or self.y < -64:
             self.reset()
 
     def reset(self):
-        self.x = choice(lanes) 
-        self.y = -64  
-        direction = choice(["up", "down", "left", "right"]) 
+        # adding to choose a random direction (0: up, 1: down, 2: left, 3: right)
+        direction = randint(0, 3)
+        # calculating speed first, to avoid repetition
+        speed = (randint(0, 200) / 100) + 1 
 
-        if direction == "up":
-            self.dy = -5
+        if direction == 0:  # up
+            self.x = choice(lanes)
+            self.y = 500
             self.dx = 0
-        elif direction == "down":
-            self.dy = 5
+            self.dy = -speed 
+        elif direction == 1:  # down
+            self.x = choice(lanes)
+            self.y = -64
             self.dx = 0
-        elif direction == "left":
-            self.dx = -5
+            self.dy = speed
+        elif direction == 2:  # left
+            self.x = 500
+            self.y = choice(lanes)
+            self.dx = -speed
             self.dy = 0
-        elif direction == "right":
-            self.dx = 5
+        elif direction == 3:  # right
+            self.x = -64
+            self.y = choice(lanes)
+            self.dx = speed
             self.dy = 0
 
 class Player(GameObject):
@@ -93,16 +100,6 @@ class Player(GameObject):
         self.pos_x = 1 
         self.pos_y = 1
         self.reset()
-    
-    def reset(self):
-        self.x = lanes[self.pos_x]
-        self.y = lanes[self.pos_y]
-        self.dx = self.x
-        self.dy = self.y
-    
-    def update_dx_dy(self):
-        self.dx = lanes[self.pos_x]
-        self.dy = lanes[self.pos_y]
 
     def left(self):
         if self.pos_x > 0:
@@ -127,6 +124,16 @@ class Player(GameObject):
     def move(self):
         self.x -= (self.x - self.dx) * 0.25
         self.y -= (self.y - self.dy) * 0.25
+
+    def reset(self):
+        self.x = lanes[self.pos_x]
+        self.y = lanes[self.pos_y]
+        self.dx = self.x
+        self.dy = self.y
+    
+    def update_dx_dy(self):
+        self.dx = lanes[self.pos_x]
+        self.dy = lanes[self.pos_y]
 
 apple = Apple()
 strawberry = Strawberry()
