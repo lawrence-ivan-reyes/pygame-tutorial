@@ -17,7 +17,7 @@ class Voldemort(GameObject):
         # adding to choose a random direction (0: up, 1: down, 2: left, 3: right)
         direction = randint(0, 3)
         # calculating speed first, to avoid repetition
-        speed = (randint(0, 200) / 100) + 1 
+        speed = (randint(0, 200) / 100) + 3 # a little faster to make it harder
 
         if direction == 0:  # up
             self.x = choice(lanes)

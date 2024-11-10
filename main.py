@@ -22,6 +22,7 @@ clock = pygame.time.Clock()
 game_over_sound = pygame.mixer.Sound('./sounds/over.mp3') 
 point_sound = pygame.mixer.Sound('./sounds/point.mp3') 
 background_music = './sounds/background.mp3' 
+snitch_sound = pygame.mixer.Sound('./sounds/snitch.mp3') 
 
 background_image = pygame.image.load("./images/background.png")
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -81,7 +82,10 @@ while running:
 
         point = pygame.sprite.spritecollideany(player, point_sprites)
         if point:
-            point_sound.play() # ill play point sound effect here
+            if isinstance(point, GoldenSnitch): 
+                snitch_sound.play() # plays only when the golden snitch is caught
+            else:
+                point_sound.play()  
             point.reset()
 
         if pygame.sprite.collide_rect(player, voldemort):
