@@ -1,4 +1,4 @@
-# _Harry's Great Escape_ 🧙🏻
+# Harry's Great Escape 🧙🏻
 ### Ivan Reyes | ACS 1111: Object Oriented Programming | Dani Roxberry 
 
 ---
@@ -7,7 +7,7 @@
 _Harry's Great Escape_ is interactive Pygame application inspired by the Harry Potter universe.  Navigate Harry through the magical corridors of Hogwarts, collecting points by catching his friends Ron and Hermione while dodging 'He-Who-Must-Not-Be-Named' (a.k.a. Voldemort). Bonus points if you catch the speedy Golden Snitch!
 
 **Key features:**
-* **Harry Potter theme:** Immerse yourself in the wizarding world with custom graphics, sound effects, and a Harry Potter-based font.
+* **Harry Potter Theme:** Uses custom graphics, sound effects, and a Harry Potter-based font.
 * **Dynamic gameplay:**  Control Harry's movement with the arrow keys to navigate lanes and collect points.
 * **Multiple game objects:**  Encounter Ron, Hermione, the Golden Snitch, and Voldemort, each with its own behavior and point value.
 * **Animated background:**  Enjoy a lively backdrop with floating magical objects.
