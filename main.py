@@ -15,6 +15,9 @@ from golden_snitch import GoldenSnitch
 
 pygame.init()
 
+pygame.font.init()
+font = pygame.font.Font('./font/HARRYP__.TTF', 30)
+
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
@@ -53,6 +56,7 @@ point_sprites.add(snitch)
 
 # for stretch challenge
 game_state = 'playing'
+score = 0
 
 running = True
 while running:
@@ -83,8 +87,10 @@ while running:
         point = pygame.sprite.spritecollideany(player, point_sprites)
         if point:
             if isinstance(point, GoldenSnitch): 
+                score += 5
                 snitch_sound.play() # plays only when the golden snitch is caught
             else:
+                score += 1
                 point_sound.play()  
             point.reset()
 
@@ -94,7 +100,11 @@ while running:
 
         if not pygame.mixer.music.get_busy():  
             pygame.mixer.music.load(background_music)
-            pygame.mixer.music.play(-1)  # -1 to loop indefinitely
+            pygame.mixer.music.play(-1)  # -1 to loop indefinitely (until the game resets)
+
+        # for score stretch challenge
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))  
+        screen.blit(score_text, (10, 10)) 
 
     elif game_state == 'game_over':
         player.reset()
@@ -106,6 +116,7 @@ while running:
         float3.reset()
         game_state = 'playing'
         pygame.mixer.music.stop()
+        score = 0
 
     pygame.display.flip()
     clock.tick(60)
