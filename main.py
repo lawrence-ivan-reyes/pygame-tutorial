@@ -17,8 +17,10 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
-game_over_sound = pygame.mixer.Sound('./sounds/game_over.mp3') # stretch challenge
-point_sound = pygame.mixer.Sound('./sounds/point.mp3')  # stretch challenge
+# stretch challenge - adding sounds
+game_over_sound = pygame.mixer.Sound('./sounds/over.mp3') 
+point_sound = pygame.mixer.Sound('./sounds/point.mp3') 
+background_music = './sounds/background.mp3' 
 
 background_image = pygame.image.load("./images/background.png")
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -75,12 +77,16 @@ while running:
 
         point = pygame.sprite.spritecollideany(player, point_sprites)
         if point:
-            point_sound.play()
+            point_sound.play() # ill play point sound effect here
             point.reset()
 
         if pygame.sprite.collide_rect(player, voldemort):
             game_over_sound.play()  # ill play the game over sound effect here
             game_state = 'game_over'
+
+        if not pygame.mixer.music.get_busy():  
+            pygame.mixer.music.load(background_music)
+            pygame.mixer.music.play(-1)  # -1 to loop indefinitely
 
     elif game_state == 'game_over':
         player.reset()
@@ -91,6 +97,7 @@ while running:
         float2.reset()
         float3.reset()
         game_state = 'playing'
+        pygame.mixer.music.stop()
 
     pygame.display.flip()
     clock.tick(60)
