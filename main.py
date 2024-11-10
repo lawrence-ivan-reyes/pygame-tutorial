@@ -17,6 +17,7 @@ pygame.init()
 
 pygame.font.init()
 font = pygame.font.Font('./font/HARRYP__.TTF', 30)
+rules_font = pygame.font.Font('./font/HARRYP__.TTF', 20)  
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -55,27 +56,43 @@ point_sprites.add(hermione)
 point_sprites.add(snitch)
 
 # for stretch challenge
-game_state = 'playing'
+game_state = 'ready'
 score = 0
 
 running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+    if game_state == 'ready':
+        # stretch challenge: adding the starting screen
+        screen.blit(background_image, (0, 0))
+
+        title_font = pygame.font.Font('./font/HARRYP__.TTF', 40)  
+        title_text = title_font.render("Harry's Great Escape", True, (255, 255, 255)) 
+        screen.blit(title_text, (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT // 2 - 120)) 
+
+        rules_text1 = rules_font.render("Catch Ron or Hermione: +1 point", True, (255, 255, 255))
+        rules_text2 = rules_font.render("Catch the Golden Snitch: +5 points", True, (255, 255, 255))
+        rules_text3 = rules_font.render("Voldemort hits Ron/Hermione/Golden Snitch: Lose 1/1/5 points", True, (255, 255, 255))
+        rules_text4 = rules_font.render("Hit by Voldemort: Game Over!", True, (255, 255, 255))
+        rules_text5 = rules_font.render("Press any key to start", True, (255, 255, 255))
+
+        screen.blit(rules_text1, (50, SCREEN_HEIGHT // 2 - 60)) 
+        screen.blit(rules_text2, (50, SCREEN_HEIGHT // 2 - 20))
+        screen.blit(rules_text3, (50, SCREEN_HEIGHT // 2 + 20))
+        screen.blit(rules_text4, (50, SCREEN_HEIGHT // 2 + 60))
+        screen.blit(rules_text5, (50, SCREEN_HEIGHT // 2 + 100))
+
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.load(background_music)
+            pygame.mixer.music.play(-1)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 running = False
-            elif event.key == pygame.K_LEFT:
-                player.left()  
-            elif event.key == pygame.K_RIGHT:
-                player.right()  
-            elif event.key == pygame.K_UP:
-                player.up()  
-            elif event.key == pygame.K_DOWN:
-                player.down() 
-    
-    if game_state == 'playing':
+            if event.type == pygame.KEYDOWN:
+                game_state = 'playing'
+                pygame.mixer.music.rewind()
+
+    elif game_state == 'playing':
         screen.fill((255, 255, 255))
 
         screen.blit(background_image, (0, 0))
@@ -126,6 +143,21 @@ while running:
         game_state = 'playing'
         pygame.mixer.music.stop()
         score = 0
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            elif event.key == pygame.K_LEFT:
+                player.left()  
+            elif event.key == pygame.K_RIGHT:
+                player.right()  
+            elif event.key == pygame.K_UP:
+                player.up()  
+            elif event.key == pygame.K_DOWN:
+                player.down() 
 
     pygame.display.flip()
     clock.tick(60)
